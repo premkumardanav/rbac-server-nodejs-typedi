@@ -131,6 +131,30 @@ export const swaggerSpec = swaggerJSDoc({
             },
           },
         },
+        CreateUser: {
+          type: "object",
+          required: ["email", "password", "role"],
+          properties: {
+            email: { type: "string", format: "email" },
+            password: { type: "string" },
+            role: { type: "string", enum: ["doctor", "nurse"] },
+          },
+        },
+        CreatePatient: {
+          type: "object",
+          required: ["name"],
+          properties: {
+            name: { type: "string" },
+            diagnosis: { type: "string", nullable: true },
+          },
+        },
+        UpdatePatient: {
+          type: "object",
+          properties: {
+            name: { type: "string" },
+            diagnosis: { type: "string", nullable: true },
+          },
+        },
         ErrorResponse: {
           type: "object",
           properties: {

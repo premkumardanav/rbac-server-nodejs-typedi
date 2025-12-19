@@ -1,5 +1,5 @@
 import { Router } from "express";
-import Container from "typedi";
+import { Container } from "typedi";
 import { AuthService } from "./auth.service.ts";
 
 const router = Router();
