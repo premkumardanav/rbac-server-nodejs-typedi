@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+
+    // Decorators required by TypeORM and TypeDI
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    // Allow imports ending in .ts
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+
+    // Fix strict initialization warnings
+    "strict": true,
+    "strictPropertyInitialization": false,
+
+    "resolveJsonModule": true,
+    "allowJs": false
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
