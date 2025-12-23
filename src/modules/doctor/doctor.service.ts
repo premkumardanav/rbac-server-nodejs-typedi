@@ -62,4 +62,19 @@ export class DoctorService {
     await this.patientRepo.save(patient);
     return { id: patient.id };
   }
+
+  async getPatients(doctorId: string): Promise<IPatientPublic[]> {
+    const patients = await this.patientRepo.find({
+      where: { doctor: { id: doctorId } },
+      relations: ["doctor", "nurse"],
+    });
+
+    return patients.map((p) => ({
+      id: p.id,
+      name: p.name,
+      diagnosis: p.diagnosis ?? null,
+      doctor: p.doctor ? { id: p.doctor.id } : null,
+      nurse: p.nurse ? { id: p.nurse.id } : null,
+    }));
+  }
 }

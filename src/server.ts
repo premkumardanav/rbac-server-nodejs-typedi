@@ -6,6 +6,7 @@ import { swaggerSpec } from "./config/swagger.js";
 import authController from "./modules/auth/auth.controller.js";
 import adminController from "./modules/admin/admin.controller.js";
 import doctorController from "./modules/doctor/doctor.controller.js";
+import nurseController from "./modules/nurse/nurse.controller.js";
 import { PORT } from "./config/env.js";
 
 await AppDataSource.initialize();
@@ -28,6 +29,7 @@ app.use(
 app.use("/auth", authController);
 app.use("/admin", adminController);
 app.use("/doctor", doctorController);
+app.use("/nurse", nurseController);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT} 🚀`);
