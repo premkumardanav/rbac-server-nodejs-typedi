@@ -136,4 +136,70 @@ router.delete(
   }
 );
 
+/**
+ * @swagger
+ * /admin/users/email/{email}:
+ *   get:
+ *     tags:
+ *       - Admin
+ *     summary: Get user details by email
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: email
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: email
+ *         description: User email address
+ *     responses:
+ *       200:
+ *         description: User details (password excluded)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   format: uuid
+ *                 email:
+ *                   type: string
+ *                   format: email
+ *                 role:
+ *                   type: string
+ *                   enum: ["admin", "doctor", "nurse"]
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User not found"
+ */
+router.get(
+  "/users/email/:email",
+  authenticate,
+  authorize(UserRole.ADMIN),
+  async (req, res) => {
+    try {
+      const service = Container.get(AdminService);
+      const user = await service.getUserByEmail(req.params.email);
+      res.status(200).json(user);
+    } catch (error: any) {
+      res.status(404).json({ message: error.message });
+    }
+  }
+);
+
 export default router;

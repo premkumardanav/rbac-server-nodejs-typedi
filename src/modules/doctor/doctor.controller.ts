@@ -22,6 +22,41 @@ const router = Router();
 /**
  * @swagger
  * /doctor/patients:
+ *   get:
+ *     tags:
+ *       - Doctor
+ *     summary: Get all patients assigned to the authenticated doctor
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of patients assigned to the doctor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Patient'
+ */
+router.get(
+  "/patients",
+  authenticate,
+  authorize(UserRole.DOCTOR),
+  async (req, res) => {
+    try {
+      const svc = Container.get(DoctorService);
+      const user = (req as any).user as any;
+      const patients = await svc.getPatients(user.id);
+      res.status(200).json(patients);
+    } catch (error: any) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+);
+
+/**
+ * @swagger
+ * /doctor/patients:
  *   post:
  *     tags:
  *       - Doctor

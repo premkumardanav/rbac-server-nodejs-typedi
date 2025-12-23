@@ -45,4 +45,26 @@ export class AdminService {
     await this.patientRepo.remove(patient);
     return;
   }
+
+  async getUserByEmail(email: string) {
+    const user = await this.userRepo.findOne({
+      where: { email },
+      select: {
+        id: true,
+        email: true,
+        role: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+    if (!user) throw new Error("User not found");
+    
+    return {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
+  }
 }
